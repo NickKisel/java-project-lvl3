@@ -14,10 +14,6 @@ public final class StringSchema {
         this.validatorState = state;
     }
 
-    public ValidatorState getValidatorState() {
-        return validatorState;
-    }
-
     public boolean isValid(String validation) {
         return validatorState.isValid(validation);
     }
@@ -27,19 +23,11 @@ public final class StringSchema {
     }
 
     public void minLength(int setMinLength) {
-        try {
-            this.validatorState.minLength(setMinLength);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.validatorState.minLength(setMinLength);
     }
 
     public StringSchema contains(String setString) {
-        try {
-            this.validatorState.contains(setString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.validatorState.contains(setString);
         return this;
     }
 }

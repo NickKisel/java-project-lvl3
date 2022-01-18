@@ -3,7 +3,7 @@ package hexlet.code.ValidatorState;
 public interface ValidatorState {
     void string();
     void required();
-    void contains(String string) throws Exception;
-    void minLength(int minLength) throws Exception;
+    void contains(String string);
+    void minLength(int minLength);
     boolean isValid(String validated);
 }
