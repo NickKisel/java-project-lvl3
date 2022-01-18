@@ -1,33 +1,33 @@
 package hexlet.code;
 
-import hexlet.code.ValidatorState.StringState;
-import hexlet.code.ValidatorState.ValidatorState;
+import hexlet.code.StringValidator.StringString;
+import hexlet.code.StringValidator.StringValidator;
 
-public final class StringSchema {
-    private ValidatorState validatorState;
+public final class StringSchema extends BaseSchema {
+    private StringValidator stringValidator;
 
     public StringSchema() {
-        this.validatorState = new StringState(this);
+        this.stringValidator = new StringString(this);
     }
 
-    public void setValidatorState(ValidatorState state) {
-        this.validatorState = state;
+    public void setValidatorState(StringValidator state) {
+        this.stringValidator = state;
     }
 
-    public boolean isValid(String validation) {
-        return validatorState.isValid(validation);
+    public boolean isValid(Object o) {
+        return stringValidator.isValid(o);
     }
 
     public void required() {
-        this.validatorState.required();
+        this.stringValidator.required();
     }
 
     public void minLength(int setMinLength) {
-        this.validatorState.minLength(setMinLength);
+        this.stringValidator.minLength(setMinLength);
     }
 
     public StringSchema contains(String setString) {
-        this.validatorState.contains(setString);
+        this.stringValidator.contains(setString);
         return this;
     }
 }

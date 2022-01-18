@@ -5,11 +5,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AppTest {
-    private StringSchema schema;
+    private StringSchema stringSchema;
+    private NumberSchema numberSchema;
     @BeforeEach
     void init() {
-        Validator v = new Validator();
-        schema = v.string();
+        Validator s = new Validator();
+        stringSchema = s.string();
+        Validator n = new Validator();
+        numberSchema = n.number();
     }
 
     @Test
@@ -18,51 +21,50 @@ class AppTest {
     }
 
     @Test
-    void testValidatorString() {
-        assertThat(schema.isValid("")).isTrue();
-        assertThat(schema.isValid(null)).isTrue();
-        assertThat(schema.isValid("123")).isFalse();
+    void testStringValidatorComplex() {
+        assertThat(stringSchema.isValid("")).isTrue();
+        assertThat(stringSchema.isValid(null)).isTrue();
+        assertThat(stringSchema.isValid("123")).isFalse();
+
+        stringSchema.minLength(2);
+        assertThat(stringSchema.isValid("hi")).isTrue();
+        assertThat(stringSchema.isValid("1")).isFalse();
+
+        stringSchema.required();
+        assertThat(stringSchema.isValid(null)).isFalse();
+        assertThat(stringSchema.isValid("123")).isTrue();
+
+        assertThat(stringSchema.contains("mix").isValid("fresh mix")).isTrue();
+        assertThat(stringSchema.contains("Greet").isValid("fresh mix")).isFalse();
     }
 
     @Test
-    void testValidatorMinLength() {
-        final int minLength = 5;
-        schema.minLength(minLength);
-        assertThat(schema.isValid("Hello")).isTrue();
-        assertThat(schema.isValid("Bye")).isFalse();
-        assertThat(schema.isValid("Hello, world!")).isTrue();
-    }
+    void testNumberValidatorComplex() {
+        final int min = 4;
+        final int max = 10;
+        final int minRangeCheck = 4;
+        final int maxRangeCheck = 10;
+        final int midRangeCheck = 6;
+        final int lessMinRangeCheck = 3;
+        final int moreMaxRangeCheck = 11;
 
-    @Test
-    void testValidatorContains() {
-        assertThat(schema.contains("Greet").isValid("Greetings")).isTrue();
-        assertThat(schema.contains("mix").isValid("fresh mix")).isTrue();
-        assertThat(schema.contains("Greet").isValid("fresh mix")).isFalse();
-    }
+        assertThat(numberSchema.isValid(null)).isTrue();
+        assertThat(numberSchema.isValid(1)).isFalse();
 
-    @Test
-    void testValidatorRequired() {
-        schema.required();
-        assertThat(schema.isValid("")).isFalse();
-        assertThat(schema.isValid(null)).isFalse();
-        assertThat(schema.isValid("123")).isTrue();
-        assertThat(schema.isValid("Hello")).isTrue();
-    }
+        assertThat(numberSchema.positive().isValid(1)).isTrue();
+        assertThat(numberSchema.isValid(-1)).isFalse();
 
-    @Test
-    void testValidatorComplex() {
-        assertThat(schema.isValid("")).isTrue();
-        assertThat(schema.isValid(null)).isTrue();
+        numberSchema.required();
+        assertThat(numberSchema.isValid(0)).isTrue();
+        assertThat(numberSchema.isValid(1)).isTrue();
+        assertThat(numberSchema.isValid(-1)).isTrue();
+        assertThat(numberSchema.isValid(null)).isFalse();
 
-        schema.minLength(2);
-        assertThat(schema.isValid("hi")).isTrue();
-        assertThat(schema.isValid("1")).isFalse();
-
-        schema.required();
-        assertThat(schema.isValid(null)).isFalse();
-        assertThat(schema.isValid("123")).isTrue();
-
-        assertThat(schema.contains("mix").isValid("fresh mix")).isTrue();
-        assertThat(schema.contains("Greet").isValid("fresh mix")).isFalse();
+        numberSchema.range(min, max);
+        assertThat(numberSchema.isValid(minRangeCheck)).isTrue();
+        assertThat(numberSchema.isValid(midRangeCheck)).isTrue();
+        assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
+        assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
+        assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
     }
 }
