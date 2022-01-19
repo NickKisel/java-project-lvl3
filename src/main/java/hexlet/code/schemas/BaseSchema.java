@@ -12,4 +12,12 @@ public class BaseSchema {
     public boolean isValid(Object object) {
         return statesValidator.isValid(object);
     }
+
+    /**
+     *
+     * @param state - set state
+     */
+    public void setValidatorState(StatesValidator state) {
+        this.statesValidator = state;
+    }
 }
