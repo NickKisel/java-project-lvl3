@@ -1,11 +1,11 @@
-package hexlet.code.NumberValidator;
+package hexlet.code.states.NumberStates;
 
-import hexlet.code.NumberSchema;
+import hexlet.code.schemas.NumberSchema;
 
-public final class IRequiredState implements NumberValidator {
+public final class RequiredNumberState implements NumberStates {
     private NumberSchema numberSchema;
 
-    public IRequiredState(NumberSchema schema) {
+    public RequiredNumberState(NumberSchema schema) {
         this.numberSchema = schema;
     }
 
@@ -24,7 +24,7 @@ public final class IRequiredState implements NumberValidator {
     @Override
     public void required() {
         NumberSchema newSchema = this.numberSchema;
-        newSchema.setValidatorState(new IRequiredState(newSchema));
+        newSchema.setValidatorState(new RequiredNumberState(newSchema));
     }
 
     @Override

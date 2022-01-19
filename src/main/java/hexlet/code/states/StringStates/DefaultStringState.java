@@ -1,18 +1,19 @@
-package hexlet.code.StringValidator;
+package hexlet.code.states.StringStates;
 
-import hexlet.code.StringSchema;
+import hexlet.code.schemas.StringSchema;
+import hexlet.code.states.BaseStates.StatesValidator;
 
-public final class StringString implements StringValidator {
+public final class DefaultStringState implements StringStates {
     private StringSchema stringSchema;
 
-    public StringString(StringSchema schema) {
+    public DefaultStringState(StringSchema schema) {
         this.stringSchema = schema;
     }
 
     @Override
     public void required() {
         StringSchema newSchema = this.stringSchema;
-        stringSchema.setValidatorState(new RequiredString(newSchema));
+        stringSchema.setValidatorState(new RequiredStringState(newSchema));
     }
 
     @Override
@@ -23,12 +24,12 @@ public final class StringString implements StringValidator {
     @Override
     public void contains(String string) {
         StringSchema newSchema = this.stringSchema;
-        stringSchema.setValidatorState(new ContainsString(newSchema, string));
+        stringSchema.setValidatorState(new ContainsState(newSchema, string));
     }
 
     @Override
     public void minLength(int minLength) {
         StringSchema newSchema = this.stringSchema;
-        stringSchema.setValidatorState(new MinLengthString(newSchema, minLength));
+        stringSchema.setValidatorState(new MinLengthState(newSchema, minLength));
     }
 }

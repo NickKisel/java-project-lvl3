@@ -1,18 +1,23 @@
 package hexlet.code;
 
+import hexlet.code.schemas.MapSchema;
+import hexlet.code.schemas.NumberSchema;
+import hexlet.code.schemas.StringSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AppTest {
-    private StringSchema stringSchema;
-    private NumberSchema numberSchema;
+    private Validator v;
+
     @BeforeEach
     void init() {
-        Validator s = new Validator();
-        stringSchema = s.string();
-        Validator n = new Validator();
-        numberSchema = n.number();
+        v = new Validator();
     }
 
     @Test
@@ -22,6 +27,7 @@ class AppTest {
 
     @Test
     void testStringValidatorComplex() {
+        StringSchema stringSchema = v.string();
         assertThat(stringSchema.isValid("")).isTrue();
         assertThat(stringSchema.isValid(null)).isTrue();
         assertThat(stringSchema.isValid("123")).isFalse();
@@ -48,6 +54,8 @@ class AppTest {
         final int lessMinRangeCheck = 3;
         final int moreMaxRangeCheck = 11;
 
+        NumberSchema numberSchema = v.number();
+
         assertThat(numberSchema.isValid(null)).isTrue();
         assertThat(numberSchema.isValid(1)).isFalse();
 
@@ -66,5 +74,26 @@ class AppTest {
         assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
         assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
         assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
+    }
+
+    @Test
+    void testMapValidatorComplex() {
+        MapSchema mapSchema = v.map();
+
+        assertThat(mapSchema.isValid(null)).isTrue();
+        assertThat(mapSchema.isValid(Map.of(1, "hey"))).isFalse();
+
+        mapSchema.required();
+
+        assertThat(mapSchema.isValid(Map.of(1, "hey"))).isTrue();
+        assertThat(mapSchema.isValid(new HashMap<>())).isTrue();
+        Map<String, String> mapTest = new LinkedHashMap<>();
+        mapTest.put("Hello!", "World!");
+        assertThat(mapSchema.isValid(mapTest)).isTrue();
+
+        mapSchema.sizeOf(2);
+        assertThat(mapSchema.isValid(mapTest)).isFalse();
+        mapTest.put("Hexlet", "project");
+        assertThat(mapSchema.isValid(mapTest)).isTrue();
     }
 }

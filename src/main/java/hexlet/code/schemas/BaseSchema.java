@@ -1,14 +1,15 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
+import hexlet.code.states.BaseStates.StatesValidator;
 
 public class BaseSchema {
-    private ValidatorInterface validatorInterface;
+    private StatesValidator statesValidator;
     /**
      *
      * @param object can be String or Integer
      * @return result of validation
      */
     public boolean isValid(Object object) {
-        return validatorInterface.isValid(object);
+        return statesValidator.isValid(object);
     }
 }

@@ -1,12 +1,16 @@
-package hexlet.code.NumberValidator;
+package hexlet.code.states.NumberStates;
 
-import hexlet.code.NumberSchema;
+import hexlet.code.schemas.NumberSchema;
 
-public final class PositiveState implements NumberValidator {
+public final class RangeState implements NumberStates {
     private NumberSchema numberSchema;
+    private int setMin;
+    private int setMax;
 
-    public PositiveState(NumberSchema schema) {
+    public RangeState(NumberSchema schema, int a, int b) {
         this.numberSchema = schema;
+        this.setMin = a;
+        this.setMax = b;
     }
 
     @Override
@@ -24,13 +28,14 @@ public final class PositiveState implements NumberValidator {
     @Override
     public void required() {
         NumberSchema newSchema = this.numberSchema;
-        newSchema.setValidatorState(new IRequiredState(newSchema));
+        newSchema.setValidatorState(new RequiredNumberState(newSchema));
     }
 
     @Override
     public boolean isValid(Object object) {
         if (object instanceof Integer) {
-            return (int) object >= 0;
+            int iObject = (Integer) object;
+            return iObject > setMin - 1 && iObject < setMax + 1;
         }
         return false;
     }
