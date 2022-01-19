@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import hexlet.code.states.MapStates.DefaultMapState;
 import hexlet.code.states.MapStates.MapStates;
 
-public class MapSchema extends BaseSchema{
+public final class MapSchema extends BaseSchema {
     private MapStates mapState;
 
     public MapSchema() {

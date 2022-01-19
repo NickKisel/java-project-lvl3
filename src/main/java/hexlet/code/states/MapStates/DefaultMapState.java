@@ -2,7 +2,7 @@ package hexlet.code.states.MapStates;
 
 import hexlet.code.schemas.MapSchema;
 
-public class DefaultMapState implements MapStates {
+public final class DefaultMapState implements MapStates {
     private MapSchema mapSchema;
 
     public DefaultMapState(MapSchema schema) {

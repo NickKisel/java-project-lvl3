@@ -1,7 +1,6 @@
 package hexlet.code.states.StringStates;
 
 import hexlet.code.schemas.StringSchema;
-import hexlet.code.states.BaseStates.StatesValidator;
 
 public final class DefaultStringState implements StringStates {
     private StringSchema stringSchema;

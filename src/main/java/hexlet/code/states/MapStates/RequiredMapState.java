@@ -4,7 +4,7 @@ import hexlet.code.schemas.MapSchema;
 
 import java.util.Map;
 
-public class RequiredMapState implements MapStates {
+public final class RequiredMapState implements MapStates {
     private MapSchema mapSchema;
 
     public RequiredMapState(MapSchema schema) {

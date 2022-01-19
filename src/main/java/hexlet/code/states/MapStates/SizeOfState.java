@@ -4,7 +4,7 @@ import hexlet.code.schemas.MapSchema;
 
 import java.util.Map;
 
-public class SizeOfState implements MapStates {
+public final class SizeOfState implements MapStates {
     private MapSchema mapSchema;
     private int countKeysPairs;
 
