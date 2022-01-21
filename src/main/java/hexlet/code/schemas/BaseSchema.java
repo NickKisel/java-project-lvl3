@@ -1,23 +1,20 @@
 package hexlet.code.schemas;
 
-import hexlet.code.states.BaseStates.StatesValidator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Predicate;
 
+@SuppressWarnings("checkstyle:VisibilityModifier")
 public class BaseSchema {
-    private StatesValidator statesValidator;
+    protected List<Predicate<Object>> forValidation = new LinkedList<>();
+
     /**
      *
-     * @param object can be String or Integer
-     * @return result of validation
+     * @param object is the target for validation
+     * @return is boolean
      */
     public boolean isValid(Object object) {
-        return statesValidator.isValid(object);
-    }
-
-    /**
-     *
-     * @param state - set state
-     */
-    public void setValidatorState(StatesValidator state) {
-        this.statesValidator = state;
+        return forValidation.stream()
+                .allMatch(x -> x.test(object));
     }
 }

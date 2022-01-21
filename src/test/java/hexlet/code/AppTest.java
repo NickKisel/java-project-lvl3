@@ -39,7 +39,7 @@ class AppTest {
         stringSchema.required();
         assertThat(stringSchema.isValid(null)).isFalse();
         assertThat(stringSchema.isValid("123")).isTrue();
-
+//
         assertThat(stringSchema.contains("mix").isValid("fresh mix")).isTrue();
         assertThat(stringSchema.contains("Greet").isValid("fresh mix")).isFalse();
     }

@@ -1,28 +1,24 @@
 package hexlet.code.schemas;
 
-import hexlet.code.states.MapStates.DefaultMapState;
-import hexlet.code.states.MapStates.MapStates;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema {
-    private MapStates mapState;
 
     public MapSchema() {
-        this.mapState = new DefaultMapState(this);
-    }
-
-    public void setValidatorState(MapStates state) {
-        this.mapState = state;
-    }
-
-    public void sizeOf(int countKeysPairs) {
-        this.mapState.sizeOf(countKeysPairs);
-    }
-
-    public boolean isValid(Object o) {
-        return mapState.isValid(o);
+        Predicate<Object> isEmpty = object -> object == null;
+        super.forValidation.add(isEmpty);
     }
 
     public void required() {
-        this.mapState.required();
+        super.forValidation.clear();
+        Predicate<Object> isMap = object -> object instanceof Map;
+        super.forValidation.add(isMap);
+    }
+
+    public void sizeOf(int countKeysPairs) {
+        required();
+        Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
+        super.forValidation.add(isEqualCount);
     }
 }

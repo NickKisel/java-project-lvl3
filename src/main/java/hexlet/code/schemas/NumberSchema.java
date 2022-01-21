@@ -1,33 +1,32 @@
 package hexlet.code.schemas;
 
-import hexlet.code.states.NumberStates.DefaultNumberState;
-import hexlet.code.states.NumberStates.NumberStates;
+import java.util.function.Predicate;
 
 public final class NumberSchema extends BaseSchema {
-    private NumberStates numberStates;
 
     public NumberSchema() {
-        this.numberStates = new DefaultNumberState(this);
+        Predicate<Object> isEmpty = object -> object == null;
+        super.forValidation.add(isEmpty);
     }
 
-    public void setValidatorState(NumberStates state) {
-        this.numberStates = state;
-    }
-
-    public boolean isValid(Object o) {
-        return numberStates.isValid(o);
+    public void required() {
+        super.forValidation.clear();
+        Predicate<Object> isInteger = object -> object instanceof Integer;
+        super.forValidation.add(isInteger);
     }
 
     public NumberSchema positive() {
-        this.numberStates.positive();
+        required();
+        Predicate<Object> isPositive = object -> (Integer) object > 0;
+        super.forValidation.add(isPositive);
         return this;
     }
 
     public void range(int min, int max) {
-        this.numberStates.range(min, max);
+        required();
+        Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
+        super.forValidation.add(isInRange);
     }
 
-    public void required() {
-        this.numberStates.required();
-    }
+
 }

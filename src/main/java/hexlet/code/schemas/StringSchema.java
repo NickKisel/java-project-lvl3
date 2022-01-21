@@ -1,33 +1,33 @@
 package hexlet.code.schemas;
 
-import hexlet.code.states.StringStates.DefaultStringState;
-import hexlet.code.states.StringStates.StringStates;
+
+import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema {
-    private StringStates stringStates;
 
     public StringSchema() {
-        this.stringStates = new DefaultStringState(this);
-    }
-
-    public void setValidatorState(StringStates state) {
-        this.stringStates = state;
-    }
-
-    public boolean isValid(Object o) {
-        return stringStates.isValid(o);
+        Predicate<Object> isEmpty = object -> object == null || object.equals("");
+        super.forValidation.add(isEmpty);
     }
 
     public void required() {
-        this.stringStates.required();
+        super.forValidation.clear();
+        Predicate<Object> isNotEmpty = object -> object != null && !object.equals("");
+        Predicate<Object> isString = object -> object instanceof String;
+        super.forValidation.add(isNotEmpty);
+        super.forValidation.add(isString);
     }
 
-    public void minLength(int setMinLength) {
-        this.stringStates.minLength(setMinLength);
-    }
-
-    public StringSchema contains(String setString) {
-        this.stringStates.contains(setString);
+    public StringSchema contains(String string) {
+        required();
+        Predicate<Object> isContains = object -> ((String) object).contains(string);
+        super.forValidation.add(isContains);
         return this;
+    }
+
+    public void minLength(int length) {
+        required();
+        Predicate<Object> isEqualOrLonger = object -> object.toString().length() >= length;
+        super.forValidation.add(isEqualOrLonger);
     }
 }
