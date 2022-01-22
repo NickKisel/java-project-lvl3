@@ -13,17 +13,19 @@ public final class MapSchema extends BaseSchema {
         super.forValidation.add(isEmpty);
     }
 
-    public void required() {
+    public MapSchema required() {
         super.forValidation.clear();
         Predicate<Object> isMap = object -> object instanceof Map;
         super.forValidation.add(isMap);
+        return this;
     }
 
-    public void sizeof(int countKeysPairs) {
+    public MapSchema sizeof(int countKeysPairs) {
         required();
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
         System.out.println(isEqualCount);
         super.forValidation.add(isEqualCount);
+        return this;
     }
 
     public MapSchema shape(Map<String, BaseSchema> map) {

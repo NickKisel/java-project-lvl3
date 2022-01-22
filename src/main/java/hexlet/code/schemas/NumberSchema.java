@@ -9,10 +9,11 @@ public final class NumberSchema extends BaseSchema {
         super.forValidation.add(isEmpty);
     }
 
-    public void required() {
+    public NumberSchema required() {
         super.forValidation.clear();
         Predicate<Object> isInteger = object -> object instanceof Integer;
         super.forValidation.add(isInteger);
+        return this;
     }
 
     public NumberSchema positive() {
@@ -22,10 +23,11 @@ public final class NumberSchema extends BaseSchema {
         return this;
     }
 
-    public void range(int min, int max) {
+    public NumberSchema range(int min, int max) {
         required();
         Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
         super.forValidation.add(isInRange);
+        return this;
     }
 
 
