@@ -9,13 +9,11 @@ import java.util.function.Predicate;
 public final class MapSchema extends BaseSchema {
 
     public void required() {
-        super.forValidation.clear();
         Predicate<Object> isMap = object -> object instanceof Map;
         super.forValidation.add(isMap);
     }
 
     public void sizeof(int countKeysPairs) {
-        required();
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
         System.out.println(isEqualCount);
         super.forValidation.add(isEqualCount);

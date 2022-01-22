@@ -33,14 +33,14 @@ class AppTest {
         assertThat(stringSchema.isValid(null)).isTrue();
         assertThat(stringSchema.isValid("123")).isTrue();
 
+        stringSchema.required();
+        assertThat(stringSchema.isValid(null)).isFalse();
+        assertThat(stringSchema.isValid("123")).isTrue();
+
         stringSchema.minLength(2);
         assertThat(stringSchema.isValid("hi")).isTrue();
         assertThat(stringSchema.isValid("1")).isFalse();
 
-        stringSchema.required();
-        assertThat(stringSchema.isValid(null)).isFalse();
-        assertThat(stringSchema.isValid("123")).isTrue();
-//
         assertThat(stringSchema.contains("mix").isValid("fresh mix")).isTrue();
         assertThat(stringSchema.contains("Greet").isValid("fresh mix")).isFalse();
     }
@@ -64,11 +64,9 @@ class AppTest {
         assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.required();
-        assertThat(numberSchema.isValid(0)).isTrue();
-        assertThat(numberSchema.isValid(1)).isTrue();
-        assertThat(numberSchema.isValid(-1)).isTrue();
         assertThat(numberSchema.isValid(null)).isFalse();
         assertThat(numberSchema.isValid("5")).isFalse();
+        assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.range(min, max);
         assertThat(numberSchema.isValid(minRangeCheck)).isTrue();
