@@ -4,12 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
-@SuppressWarnings("checkstyle:VisibilityModifier")
 public class BaseSchema {
     protected List<Predicate<Object>> forValidation = new LinkedList<>();
 
     /**
-     *
      * @param object is the target for validation
      * @return is boolean
      */

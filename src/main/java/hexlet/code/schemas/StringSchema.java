@@ -10,12 +10,13 @@ public final class StringSchema extends BaseSchema {
         super.forValidation.add(isEmpty);
     }
 
-    public void required() {
+    public StringSchema required() {
         super.forValidation.clear();
         Predicate<Object> isNotEmpty = object -> object != null && !object.equals("");
         Predicate<Object> isString = object -> object instanceof String;
         super.forValidation.add(isNotEmpty);
         super.forValidation.add(isString);
+        return this;
     }
 
     public StringSchema contains(String string) {
