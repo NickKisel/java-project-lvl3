@@ -7,14 +7,15 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema {
+    private final Predicate<Object> isMap = object -> object instanceof Map;
 
     public void required() {
-        Predicate<Object> isMap = object -> object instanceof Map;
         super.predicates.add(isMap);
     }
 
     public void sizeof(int countKeysPairs) {
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
+        super.predicates.add(isMap);
         super.predicates.add(isEqualCount);
     }
 

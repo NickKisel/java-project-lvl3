@@ -3,9 +3,9 @@ package hexlet.code.schemas;
 import java.util.function.Predicate;
 
 public final class NumberSchema extends BaseSchema {
+    private final Predicate<Object> isInteger = object -> object instanceof Integer;
 
     public void required() {
-        Predicate<Object> isInteger = object -> object instanceof Integer;
         super.predicates.add(isInteger);
     }
 
@@ -21,11 +21,8 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public void range(int min, int max) {
-        Predicate<Object> isInteger = object -> object instanceof Integer;
         Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
         super.predicates.add(isInteger);
         super.predicates.add(isInRange);
     }
-
-
 }
