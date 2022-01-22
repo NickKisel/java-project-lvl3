@@ -11,7 +11,7 @@ public final class NumberSchema extends BaseSchema {
 
     public NumberSchema required() {
         super.forValidation.clear();
-        Predicate<Object> isInteger = object -> object instanceof Integer;
+        Predicate<Object> isInteger = object -> object == null || object instanceof Integer;
         super.forValidation.add(isInteger);
         return this;
     }
