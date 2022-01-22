@@ -21,7 +21,9 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public void range(int min, int max) {
+        Predicate<Object> isInteger = object -> object instanceof Integer;
         Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
+        super.predicates.add(isInteger);
         super.predicates.add(isInRange);
     }
 
