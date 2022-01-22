@@ -65,6 +65,7 @@ class AppTest {
         assertThat(numberSchema.positive().isValid(1)).isTrue();
         assertThat(numberSchema.positive().isValid(null)).isTrue();
         assertThat(numberSchema.isValid(-1)).isFalse();
+        assertThat(numberSchema.isValid(0)).isFalse();
 
         numberSchema.required();
         assertThat(numberSchema.isValid(null)).isFalse();

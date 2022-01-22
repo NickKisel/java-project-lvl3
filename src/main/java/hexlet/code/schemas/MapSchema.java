@@ -10,13 +10,12 @@ public final class MapSchema extends BaseSchema {
 
     public void required() {
         Predicate<Object> isMap = object -> object instanceof Map;
-        super.forValidation.add(isMap);
+        super.predicates.add(isMap);
     }
 
     public void sizeof(int countKeysPairs) {
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
-        System.out.println(isEqualCount);
-        super.forValidation.add(isEqualCount);
+        super.predicates.add(isEqualCount);
     }
 
     public MapSchema shape(Map<String, BaseSchema> map) {
@@ -26,8 +25,8 @@ public final class MapSchema extends BaseSchema {
             Predicate<Object> isEqual = object -> map.get(key).isValid(((Map) object).get(key));
             shape.add(isEqual);
         }
-        super.forValidation.clear();
-        super.forValidation.addAll(shape);
+        super.predicates.clear();
+        super.predicates.addAll(shape);
         return this;
     }
 }
