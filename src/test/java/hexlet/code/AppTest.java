@@ -28,6 +28,7 @@ class AppTest {
 
     @Test
     void testStringValidatorComplex() {
+        final int minLength = 5;
         StringSchema stringSchema = v.string();
         assertThat(stringSchema.isValid("")).isTrue();
         assertThat(stringSchema.isValid(null)).isTrue();
@@ -37,11 +38,11 @@ class AppTest {
         assertThat(stringSchema.isValid(null)).isFalse();
         assertThat(stringSchema.isValid("123")).isTrue();
 
-        stringSchema.minLength(2);
-        assertThat(stringSchema.isValid("hi")).isTrue();
+        stringSchema.minLength(minLength);
+        assertThat(stringSchema.isValid("hello")).isTrue();
         assertThat(stringSchema.isValid("1")).isFalse();
 
-        assertThat(stringSchema.contains("mix").isValid("fresh mix")).isTrue();
+        assertThat(stringSchema.contains("hello").isValid("hello world")).isTrue();
         assertThat(stringSchema.contains("Greet").isValid("fresh mix")).isFalse();
     }
 
@@ -49,10 +50,11 @@ class AppTest {
     void testNumberValidatorComplex() {
         final int min = 4;
         final int max = 10;
-        final int minRangeCheck = 4;
+        final int minRangeCheck = -4;
         final int maxRangeCheck = 10;
-        final int midRangeCheck = 6;
-        final int lessMinRangeCheck = 3;
+        final int midRangeCheckPositive = 6;
+        final int midRangeCheckNegative = -1;
+        final int lessMinRangeCheck = -5;
         final int moreMaxRangeCheck = 11;
 
         NumberSchema numberSchema = v.number();
@@ -61,6 +63,7 @@ class AppTest {
         assertThat(numberSchema.isValid(1)).isTrue();
 
         assertThat(numberSchema.positive().isValid(1)).isTrue();
+        assertThat(numberSchema.positive().isValid(null)).isTrue();
         assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.required();
@@ -69,8 +72,9 @@ class AppTest {
         assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.range(min, max);
-        assertThat(numberSchema.isValid(minRangeCheck)).isTrue();
-        assertThat(numberSchema.isValid(midRangeCheck)).isTrue();
+        assertThat(numberSchema.isValid(minRangeCheck)).isFalse();
+        assertThat(numberSchema.isValid(midRangeCheckPositive)).isTrue();
+        assertThat(numberSchema.isValid(midRangeCheckNegative)).isFalse();
         assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
         assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
         assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
