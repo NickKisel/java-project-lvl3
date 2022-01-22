@@ -19,7 +19,7 @@ public final class MapSchema extends BaseSchema {
         super.forValidation.add(isMap);
     }
 
-    public void sizeOf(int countKeysPairs) {
+    public void sizeof(int countKeysPairs) {
         required();
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
         System.out.println(isEqualCount);

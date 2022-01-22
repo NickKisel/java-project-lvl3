@@ -92,7 +92,8 @@ class AppTest {
         mapTest.put("Hello!", "World!");
         assertThat(mapSchema.isValid(mapTest)).isTrue();
 
-        mapSchema.sizeOf(2);
+        mapSchema.sizeof(2);
+
         assertThat(mapSchema.isValid(mapTest)).isFalse();
         mapTest.put("Hexlet", "project");
         assertThat(mapSchema.isValid(mapTest)).isTrue();
