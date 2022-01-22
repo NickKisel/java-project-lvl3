@@ -48,7 +48,7 @@ class AppTest {
 
     @Test
     void testNumberValidatorComplex() {
-        final int min = 4;
+        final int min = -4;
         final int max = 10;
         final int minRangeCheck = -4;
         final int maxRangeCheck = 10;
@@ -72,9 +72,8 @@ class AppTest {
         assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.range(min, max);
-        assertThat(numberSchema.isValid(minRangeCheck)).isFalse();
-        assertThat(numberSchema.isValid(midRangeCheckPositive)).isTrue();
-        assertThat(numberSchema.isValid(midRangeCheckNegative)).isFalse();
+        assertThat(numberSchema.isValid(minRangeCheck)).isTrue();
+        assertThat(numberSchema.isValid(midRangeCheckNegative)).isTrue();
         assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
         assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
         assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
