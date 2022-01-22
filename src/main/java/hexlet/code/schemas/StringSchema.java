@@ -5,11 +5,6 @@ import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema {
 
-    public StringSchema() {
-        Predicate<Object> isEmpty = object -> object == null || object.equals("");
-        super.forValidation.add(isEmpty);
-    }
-
     public StringSchema required() {
         super.forValidation.clear();
         Predicate<Object> isNotEmpty = object -> object != null && !object.equals("");

@@ -31,7 +31,7 @@ class AppTest {
         StringSchema stringSchema = v.string();
         assertThat(stringSchema.isValid("")).isTrue();
         assertThat(stringSchema.isValid(null)).isTrue();
-        assertThat(stringSchema.isValid("123")).isFalse();
+        assertThat(stringSchema.isValid("123")).isTrue();
 
         stringSchema.minLength(2);
         assertThat(stringSchema.isValid("hi")).isTrue();
@@ -58,7 +58,7 @@ class AppTest {
         NumberSchema numberSchema = v.number();
 
         assertThat(numberSchema.isValid(null)).isTrue();
-        assertThat(numberSchema.isValid(1)).isFalse();
+        assertThat(numberSchema.isValid(1)).isTrue();
 
         assertThat(numberSchema.positive().isValid(1)).isTrue();
         assertThat(numberSchema.isValid(-1)).isFalse();
@@ -83,7 +83,7 @@ class AppTest {
         MapSchema mapSchema = v.map();
 
         assertThat(mapSchema.isValid(null)).isTrue();
-        assertThat(mapSchema.isValid(Map.of(1, "hey"))).isFalse();
+        assertThat(mapSchema.isValid(Map.of(1, "hey"))).isTrue();
 
         mapSchema.required();
 

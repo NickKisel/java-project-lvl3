@@ -4,11 +4,6 @@ import java.util.function.Predicate;
 
 public final class NumberSchema extends BaseSchema {
 
-    public NumberSchema() {
-        Predicate<Object> isEmpty = object -> object == null;
-        super.forValidation.add(isEmpty);
-    }
-
     public void required() {
         super.forValidation.clear();
         Predicate<Object> isInteger = object -> object instanceof Integer;

@@ -8,24 +8,17 @@ import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema {
 
-    public MapSchema() {
-        Predicate<Object> isEmpty = object -> object == null;
-        super.forValidation.add(isEmpty);
-    }
-
-    public MapSchema required() {
+    public void required() {
         super.forValidation.clear();
         Predicate<Object> isMap = object -> object instanceof Map;
         super.forValidation.add(isMap);
-        return this;
     }
 
-    public MapSchema sizeof(int countKeysPairs) {
+    public void sizeof(int countKeysPairs) {
         required();
         Predicate<Object> isEqualCount = object -> ((Map) object).size() == countKeysPairs;
         System.out.println(isEqualCount);
         super.forValidation.add(isEqualCount);
-        return this;
     }
 
     public MapSchema shape(Map<String, BaseSchema> map) {
