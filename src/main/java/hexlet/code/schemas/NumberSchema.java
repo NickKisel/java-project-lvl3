@@ -11,8 +11,14 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        required();
-        Predicate<Object> isPositive = object -> (Integer) object >= 0;
+        super.forValidation.clear();
+        Predicate<Object> isPositive = object -> {
+            if (object instanceof Integer) {
+                return (Integer) object >= 0;
+            } else {
+                return object == null;
+            }
+        };
         super.forValidation.add(isPositive);
         return this;
     }
