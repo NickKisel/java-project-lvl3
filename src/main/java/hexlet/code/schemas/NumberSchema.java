@@ -12,7 +12,7 @@ public final class NumberSchema extends BaseSchema {
     public NumberSchema positive() {
         Predicate<Object> isPositive = object -> {
             if (object instanceof Integer) {
-                return (Integer) object >= 0;
+                return (Integer) object > 0;
             }
             return object == null;
         };
@@ -21,8 +21,6 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public void range(int min, int max) {
-        super.forValidation.clear();
-        required();
         Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
         super.forValidation.add(isInRange);
     }

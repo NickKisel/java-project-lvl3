@@ -72,8 +72,10 @@ class AppTest {
         assertThat(numberSchema.isValid(-1)).isFalse();
 
         numberSchema.range(min, max);
-        assertThat(numberSchema.isValid(minRangeCheck)).isTrue();
-        assertThat(numberSchema.isValid(midRangeCheckNegative)).isTrue();
+        assertThat(numberSchema.isValid(minRangeCheck)).isFalse();
+        assertThat(numberSchema.isValid(midRangeCheckPositive)).isTrue();
+        assertThat(numberSchema.isValid(midRangeCheckNegative)).isFalse();
+        assertThat(numberSchema.isValid("-10")).isFalse();
         assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
         assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
         assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
