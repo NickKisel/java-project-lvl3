@@ -16,8 +16,8 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        super.forValidation.clear();
-        Predicate<Object> isPositive = object -> object == null || (Integer) object >= 0;
+        required();
+        Predicate<Object> isPositive = object -> (Integer) object >= 0;
         super.forValidation.add(isPositive);
         return this;
     }
