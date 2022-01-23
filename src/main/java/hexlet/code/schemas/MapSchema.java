@@ -19,7 +19,7 @@ public final class MapSchema extends BaseSchema {
         super.predicates.add(isEqualCount);
     }
 
-    public MapSchema shape(Map<String, BaseSchema> map) {
+    public void shape(Map<String, BaseSchema> map) {
         List<Predicate<Object>> shape = new LinkedList<>();
         Set<String> keys = map.keySet();
         for (String key : keys) {
@@ -28,6 +28,5 @@ public final class MapSchema extends BaseSchema {
         }
         super.predicates.clear();
         super.predicates.addAll(shape);
-        return this;
     }
 }
