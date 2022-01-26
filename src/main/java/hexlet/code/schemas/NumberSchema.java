@@ -6,7 +6,7 @@ public final class NumberSchema extends BaseSchema {
     private final Predicate<Object> isInteger = object -> object instanceof Integer;
 
     public void required() {
-        super.predicates.add(isInteger);
+        getPredicates().add(isInteger);
     }
 
     public NumberSchema positive() {
@@ -16,13 +16,13 @@ public final class NumberSchema extends BaseSchema {
             }
             return object == null;
         };
-        super.predicates.add(isPositive);
+        getPredicates().add(isPositive);
         return this;
     }
 
     public void range(int min, int max) {
         Predicate<Object> isInRange = object -> (Integer) object >= min && (Integer) object <= max;
-        super.predicates.add(isInteger);
-        super.predicates.add(isInRange);
+        getPredicates().add(isInteger);
+        getPredicates().add(isInRange);
     }
 }

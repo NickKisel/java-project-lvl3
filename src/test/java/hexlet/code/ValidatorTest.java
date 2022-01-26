@@ -13,17 +13,12 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AppTest {
+class ValidatorTest {
     private Validator v;
 
     @BeforeEach
     void init() {
         v = new Validator();
-    }
-
-    @Test
-    void testApp() {
-        assertThat(App.greetings()).isEqualTo("Hello, World!");
     }
 
     @Test
@@ -42,20 +37,17 @@ class AppTest {
         assertThat(stringSchema.isValid("hello")).isTrue();
         assertThat(stringSchema.isValid("1")).isFalse();
 
-        assertThat(stringSchema.contains("hello").isValid("hello world")).isTrue();
-        assertThat(stringSchema.contains("Greet").isValid("fresh mix")).isFalse();
+        assertThat(stringSchema.contains("hi").isValid("hi world")).isTrue();
+        assertThat(stringSchema.isValid("hi")).isFalse();
+        assertThat(stringSchema.contains("dear").isValid("fresh mix")).isFalse();
+        assertThat(stringSchema.isValid("hi, dear friend")).isTrue();
+        assertThat(stringSchema.isValid("hi, friend")).isFalse();
+        assertThat(stringSchema.isValid("dear friend")).isFalse();
     }
 
     @Test
     void testNumberValidatorComplex() {
-        final int min = -4;
-        final int max = 10;
-        final int minRangeCheck = -4;
-        final int maxRangeCheck = 10;
-        final int midRangeCheckPositive = 6;
-        final int midRangeCheckNegative = -1;
-        final int lessMinRangeCheck = -5;
-        final int moreMaxRangeCheck = 11;
+        final int nThree = 3;
 
         NumberSchema numberSchema = v.number();
 
@@ -72,14 +64,12 @@ class AppTest {
         assertThat(numberSchema.isValid("5")).isFalse();
         assertThat(numberSchema.isValid(-1)).isFalse();
 
-        numberSchema.range(min, max);
-        assertThat(numberSchema.isValid(minRangeCheck)).isFalse();
-        assertThat(numberSchema.isValid(midRangeCheckPositive)).isTrue();
-        assertThat(numberSchema.isValid(midRangeCheckNegative)).isFalse();
-        assertThat(numberSchema.isValid("-10")).isFalse();
-        assertThat(numberSchema.isValid(maxRangeCheck)).isTrue();
-        assertThat(numberSchema.isValid(lessMinRangeCheck)).isFalse();
-        assertThat(numberSchema.isValid(moreMaxRangeCheck)).isFalse();
+        numberSchema.range(-1, 2);
+        assertThat(numberSchema.isValid(-1)).isFalse();
+        assertThat(numberSchema.isValid(1)).isTrue();
+        assertThat(numberSchema.isValid("1")).isFalse();
+        assertThat(numberSchema.isValid(1)).isTrue();
+        assertThat(numberSchema.isValid(nThree)).isFalse();
     }
 
     @Test
@@ -108,6 +98,7 @@ class AppTest {
     void testMapValidatorShape() {
         final int human1Age = 100;
         final int human4Age = -5;
+
         MapSchema mapSchema = v.map();
         Map<String, BaseSchema> schemas = new HashMap<>();
         schemas.put("name", v.string().required());

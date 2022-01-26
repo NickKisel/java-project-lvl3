@@ -11,21 +11,26 @@ public final class StringSchema extends BaseSchema {
 
     public StringSchema required() {
         Predicate<Object> isNotEmptyString = object -> !object.equals("");
-        super.predicates.add(isString);
-        super.predicates.add(isNotEmptyString);
+        getPredicates().add(isString);
+        getPredicates().add(isNotEmptyString);
         return this;
     }
 
     public StringSchema contains(String string) {
         Predicate<Object> isContains = object -> ((String) object).contains(string);
-        super.predicates.add(isString);
-        super.predicates.add(isContains);
+        getPredicates().add(isString);
+        getPredicates().add(isContains);
         return this;
+
     }
 
     public void minLength(int length) {
-        Predicate<Object> isEqualOrLonger = object -> object.toString().length() >= length;
-        super.predicates.add(isString);
-        super.predicates.add(isEqualOrLonger);
+        Predicate<Object> isEqualOrLonger = object -> {
+            if (object instanceof String) {
+                return object.toString().length() >= length;
+            }
+            return object == null;
+        };
+        getPredicates().add(isEqualOrLonger);
     }
 }
