@@ -7,8 +7,8 @@ import java.util.function.Predicate;
 public class BaseSchema {
     private List<Predicate<Object>> predicates = new LinkedList<>();
 
-    protected final List<Predicate<Object>> getPredicates() {
-        return predicates;
+    protected final void addValidation(Predicate<Object> predicate) {
+        this.predicates.add(predicate);
     }
 
     public final boolean isValid(Object object) {

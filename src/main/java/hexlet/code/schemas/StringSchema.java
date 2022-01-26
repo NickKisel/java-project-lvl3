@@ -11,15 +11,15 @@ public final class StringSchema extends BaseSchema {
 
     public StringSchema required() {
         Predicate<Object> isNotEmptyString = object -> !object.equals("");
-        getPredicates().add(isString);
-        getPredicates().add(isNotEmptyString);
+        addValidation(isString);
+        addValidation(isNotEmptyString);
         return this;
     }
 
     public StringSchema contains(String string) {
         Predicate<Object> isContains = object -> ((String) object).contains(string);
-        getPredicates().add(isString);
-        getPredicates().add(isContains);
+        addValidation(isString);
+        addValidation(isContains);
         return this;
 
     }
@@ -31,6 +31,6 @@ public final class StringSchema extends BaseSchema {
             }
             return object == null;
         };
-        getPredicates().add(isEqualOrLonger);
+        addValidation(isEqualOrLonger);
     }
 }
