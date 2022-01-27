@@ -1,36 +1,22 @@
 package hexlet.code.schemas;
 
-
-import java.util.function.Predicate;
-
 public final class StringSchema extends BaseSchema {
-    private final Predicate<Object> isString = object -> object instanceof String;
 
     public StringSchema() {
     }
 
     public StringSchema required() {
-        Predicate<Object> isNotEmptyString = object -> !object.equals("");
-        addValidation(isString);
-        addValidation(isNotEmptyString);
+        addValidation(object -> object instanceof String && !object.equals(""));
         return this;
     }
 
     public StringSchema contains(String string) {
-        Predicate<Object> isContains = object -> ((String) object).contains(string);
-        addValidation(isString);
-        addValidation(isContains);
+        addValidation(object -> object == null || ((String) object).contains(string));
         return this;
-
     }
 
-    public void minLength(int length) {
-        Predicate<Object> isEqualOrLonger = object -> {
-            if (object instanceof String) {
-                return object.toString().length() >= length;
-            }
-            return object == null;
-        };
-        addValidation(isEqualOrLonger);
+    public StringSchema minLength(int length) {
+        addValidation(object -> object == null || object instanceof String && ((String) object).length() >= length);
+        return this;
     }
 }

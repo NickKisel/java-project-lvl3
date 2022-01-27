@@ -49,27 +49,33 @@ class ValidatorTest {
     void testNumberValidatorComplex() {
         final int nThree = 3;
 
-        NumberSchema numberSchema = v.number();
+        NumberSchema numberSchema1 = v.number();
 
-        assertThat(numberSchema.isValid(null)).isTrue();
-        assertThat(numberSchema.isValid(1)).isTrue();
+        assertThat(numberSchema1.isValid(null)).isTrue();
+        assertThat(numberSchema1.isValid(1)).isTrue();
 
-        assertThat(numberSchema.positive().isValid(1)).isTrue();
-        assertThat(numberSchema.positive().isValid(null)).isTrue();
-        assertThat(numberSchema.isValid(-1)).isFalse();
-        assertThat(numberSchema.isValid(0)).isFalse();
+        assertThat(numberSchema1.positive().isValid(1)).isTrue();
+        assertThat(numberSchema1.positive().isValid(null)).isTrue();
+        assertThat(numberSchema1.isValid(-1)).isFalse();
+        assertThat(numberSchema1.isValid(0)).isFalse();
 
-        numberSchema.required();
-        assertThat(numberSchema.isValid(null)).isFalse();
-        assertThat(numberSchema.isValid("5")).isFalse();
-        assertThat(numberSchema.isValid(-1)).isFalse();
+        numberSchema1.required();
+        assertThat(numberSchema1.isValid(null)).isFalse();
+        assertThat(numberSchema1.isValid("5")).isFalse();
+        assertThat(numberSchema1.isValid(-1)).isFalse();
 
-        numberSchema.range(-1, 2);
-        assertThat(numberSchema.isValid(-1)).isFalse();
-        assertThat(numberSchema.isValid(1)).isTrue();
-        assertThat(numberSchema.isValid("1")).isFalse();
-        assertThat(numberSchema.isValid(1)).isTrue();
-        assertThat(numberSchema.isValid(nThree)).isFalse();
+        numberSchema1.range(-1, 2);
+        assertThat(numberSchema1.isValid(-1)).isFalse();
+        assertThat(numberSchema1.isValid(1)).isTrue();
+        assertThat(numberSchema1.isValid("1")).isFalse();
+        assertThat(numberSchema1.isValid(2)).isTrue();
+        assertThat(numberSchema1.isValid(nThree)).isFalse();
+
+        NumberSchema numberSchema2 = v.number();
+
+        numberSchema2.required();
+        numberSchema2.range(-1, 2);
+        assertThat(numberSchema2.isValid(-1)).isTrue();
     }
 
     @Test
