@@ -6,11 +6,12 @@ import java.util.Set;
 public final class MapSchema extends BaseSchema {
 
     public void required() {
+        requiredCall();
         addValidation(object -> object instanceof Map);
     }
 
     public void sizeof(int countKeysPairs) {
-        addValidation(object -> object == null || object instanceof Map
+        addValidation(object -> object instanceof Map
                 && ((Map<?, ?>) object).size() == countKeysPairs);
     }
 

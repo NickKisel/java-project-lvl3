@@ -6,17 +6,18 @@ public final class StringSchema extends BaseSchema {
     }
 
     public StringSchema required() {
+        requiredCall();
         addValidation(object -> object instanceof String && !object.equals(""));
         return this;
     }
 
     public StringSchema contains(String string) {
-        addValidation(object -> object == null || ((String) object).contains(string));
+        addValidation(object -> object instanceof String && ((String) object).contains(string));
         return this;
     }
 
     public StringSchema minLength(int length) {
-        addValidation(object -> object == null || object instanceof String && ((String) object).length() >= length);
+        addValidation(object -> object instanceof String && ((String) object).length() >= length);
         return this;
     }
 }
