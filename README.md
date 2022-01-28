@@ -20,7 +20,7 @@ To create validation for String you need use:
 StringSchema stringSchema = v.string();
 // return new StringSchema
 ```
-### `required()` - validate if object equals not empty String.
+### `required()` - validate if object is not empty String.
 Example of using:
 ```ts
 stringSchema.isValid(null); // true
