@@ -13,7 +13,7 @@ For beginnig you need create new Validator:
 Validator v = new Validator();
 ```
 After that create new schema: [StringSchema](#stringschema), [NumberSchema](#numberschema), [MapSchema](#mapschema).
-For start Validation you need to call method `isValid(Object object)` on your schema.
+For start Validation you need to call method `isValid(Object object)` on your schema. Validation is made for the specified object according to the specified rules.
 ## StringSchema
 To create validation for String you need use:
 ```ts
